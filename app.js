@@ -31,9 +31,14 @@ const displaySongs = songs => {
                       </audio>
                       <a target="blank" href="${song.link}"> <h4> Get Full Song </h4></a>
                      </div>
-                    <div class="col-md-3 text-md-right text-center">
-                        <button onclick="getLyrics('${song.artist.name}','${song.title}')" class="btn btn-success">Get Lyrics</button>
-                    </div>
+                       <div class="col-md-3 text-md-right text-center">
+                       <div id="loading-spinner" class="d-none">
+                       <div class="spinner-border text-primary" role="status">
+                           <span class="visually-hidden"></span>
+                       </div>
+                   </div>
+                           <button id="get-lyrics"  onclick="getLyrics('${song.artist.name}','${song.title}')" class="btn btn-danger">Get Lyrics</button>
+                         </div>
 
         `
         songContainer.appendChild(songDiv);
@@ -44,6 +49,7 @@ const displaySongs = songs => {
 
 const getLyrics = (artist, title) => {
     const url = `https://api.lyrics.ovh/v1/${artist}/${title}`
+
     fetch(url)
         .then(res => res.json())
         .then(data => displayLyric(data.lyrics))
@@ -75,7 +81,9 @@ const displayError = error => {
 const toggleSpinner = () => {
     const spinner = document.getElementById("loading-spinner");
     const songs = document.getElementById("song-container");
+    //const lyric = document.getElementById("get-lyrics");
     spinner.classList.toggle("d-none");
     songs.classList.toggle("d-none");
+    //lyric.classList.toggle("d-none");
 
 }
