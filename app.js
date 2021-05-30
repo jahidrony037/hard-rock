@@ -1,7 +1,7 @@
 const searchSongs = async() => {
     const searchText = document.getElementById("search-field").value;
     const url = ` https://api.lyrics.ovh/suggest/:${searchText}`
-
+    toggleSpinner();
     try {
         const res = await fetch(url);
         const data = await res.json();
@@ -37,7 +37,9 @@ const displaySongs = songs => {
 
         `
         songContainer.appendChild(songDiv);
+        toggleSpinner();
     });
+
 }
 
 const getLyrics = (artist, title) => {
@@ -68,4 +70,12 @@ const displayError = error => {
     const h3 = document.createElement('h3');
     h3.innerText = "something went wrong! it's failed to fetch plz try again after sometimes";
     errorMessege.appendChild(h3);
+}
+
+const toggleSpinner = () => {
+    const spinner = document.getElementById("loading-spinner");
+    const songs = document.getElementById("song-container");
+    spinner.classList.toggle("d-none");
+    songs.classList.toggle("d-none");
+
 }
